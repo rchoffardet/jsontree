@@ -16,54 +16,47 @@ export default {
     JsonTreeDiff
   },
 
-  data() {
-    return {
-      json : [
-        {
-            id: 1,
-            name: "my folder 1",
-            children: [
-                {
-                    id: 11, 
-                    name: "my file 1" 
-                },
-                {
-                    id: 12, 
-                    name: "my subfolder 1",
+    data() {
+        return {
+            json : [{
+                name: "assets",
+                children: [{
+                    name: "css",
                     children: [
                         {
-                            id: 111, 
-                            name: "my subfile 1" 
-                        },
-                        {
-                            id: 112, 
-                            name: "my subfile 2" 
+                            name: "main.css" 
+                        }, {
+                            name: "reset.css" 
                         },
                     ]
-                },
-            ]
-        },
-        {
-            id: 2,
-            name: "my folder 2",
-            children: [
-                {
-                    id: 21, 
-                    name: "my file 1" 
-                },
-                {
-                    id: 22, 
-                    name: "my file 2" 
-                },
-                {
-                    id: 23, 
-                    name: "my file 3" 
-                },
-            ]
+                }, {
+                    name: "js",
+                    children: [{
+                            name: "components",
+                            children: []
+                        }, {
+                            name: "libraries",
+                            children: [{
+                                name: "vue",
+                                children: [{
+                                    name: "vue.min.js"
+                                }]
+                            },{
+                                name: "bootstrap",
+                                children: [{
+                                    name: "bootstrap-toggle",
+                                    children: [{
+                                        name: "bootstrap-toggle.min.js"
+                                    }]
+                                }]
+                            }
+                            ]
+                        },
+                    ]
+                }]
+            }]
         }
-      ]
     }
-  }
 }
 </script>
 
