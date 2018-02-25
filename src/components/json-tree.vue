@@ -41,10 +41,10 @@ export default {
             });
         },
         onClose (pathArray) {
-            console.log("closed: " + pathArray.join("/"))
+            this.$emit("close",  pathArray)
         },
         onOpen (pathArray){
-            console.log("opened: " + pathArray.join("/"))
+            this.$emit("open",  pathArray)
         }
   },
 
