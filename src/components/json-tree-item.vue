@@ -1,18 +1,16 @@
 <template>
     <li 
-        :class="{collapsed : isCollapsed, folder : isFolder}"
-        @click.self="isCollapsed ? open() : close()"
+        :class="{closed : isClosed, folder : isFolder}"
+        @click.self="isClosed ? open() : close()"
     >
         {{ name }}
-        <ul v-if="isFolder && !isCollapsed">
+        <ul v-if="isFolder" v-show="!isClosed">
             <json-tree-item 
                 v-for="item in children"
                 :key="item.id"
                 :name="item.name"
                 :children="item.children"
                 :prefix="path"
-                @closed="closed"
-                @opened="opened"
             />
         </ul>
     </li>
@@ -25,7 +23,7 @@ export default {
         name: {type:String, required:true},
         icon: {type:String, default:""},
         children: {type:Array, required:false},
-        collapsed: {type:Boolean, default:true},
+        closed: {type:Boolean, default:true},
         prefix: {type:String, default:""}
     },
     computed: {
@@ -38,51 +36,15 @@ export default {
     },
     data() {
         return {
-            isCollapsed: this.collapsed
+            isClosed: this.closed
         };
     },
     methods : {
         open() {
-            this.$emit("opened", this.path);
-            this.isCollapsed = false;
+            this.isClosed = false;
         },
         close() {
-            this.$emit("closed", this.path);
-            this.isCollapsed = true;
-        },
-        getArrayFromPath(path) {
-            if(!Array.isArray(path)) {
-                path = path.split("/");
-            }
-
-            return path;
-        },
-        closeChild(path) {
-            var array = this.getArrayFromPath(path);
-            var level = array.shift();
-
-            this.$children
-                .filter(x => x.$options.propsData.name == level)
-                .forEach(x => x.closeChild(array));
-        },
-        openChild(path) {
-            var array = this.getArrayFromPath(path);
-            var level = array.shift();
-
-            this.$children
-                .filter(x => x.$options.propsData.name == level)
-                .forEach(x => {
-                    new Promise((resolve, reject) => {
-                        x.open();
-                        resolve(x);
-                    }).then(x => x.openChild(array));
-                });
-        },
-        closed(path) {
-            this.$emit("closed", path)
-        },
-        opened(path) {
-            this.$emit("opened", path)
+            this.isClosed = true;
         }
     }
 };
@@ -104,7 +66,7 @@ export default {
         transform: rotate(45deg);
     }
 
-    li.folder.collapsed::before {
+    li.folder.closed::before {
         transform: rotate(0deg);
     }
 </style>
