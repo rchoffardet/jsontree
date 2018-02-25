@@ -11,6 +11,7 @@
                 :name="item.name"
                 :children="item.children"
                 :prefix="path"
+                :ref="item.name"
             />
         </ul>
     </li>
