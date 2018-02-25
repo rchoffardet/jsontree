@@ -27,6 +27,6 @@ var ChildrenMixin = {
             }
         }
     }
-}
+};
 
-export { ChildrenMixin }
+export { ChildrenMixin };

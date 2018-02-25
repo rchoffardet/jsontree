@@ -15,13 +15,14 @@
 <script>
 import JsonTreeItem from "./json-tree-item"
 import { ChildrenMixin } from "../mixins/children"
+import _ from "lodash"
 
 export default {
   mixins: [ChildrenMixin],
   data() {
     return {
       items: this.json,
-      openedPath: []
+      openedPaths: []
     };
   },
   props :{
@@ -39,33 +40,35 @@ export default {
                 }
             });
         },
-        getBiggestParentOpenedPath (pathArray) {
-            return this.openedPath
-                .filter(x => pathArray.includes(x))
-                .sort((a, b) => a.length - b.length)
+        getOpenedPathFor (pathArray) {
+            return this.openedPaths
+                .filter(x => _.isEqual(x.slice(), pathArray))
                 [0];
         },
-        getChildOpenedPath(pathArray) {
-            return this.openedPath
-                .filter(x => x.includes(pathArray));
-        },
-        updateOpenedPath(pathArray) {
-
-        },
-        onOpen (pathArray){
-            if(!this.openedPath.indexOf(pathArray))
+        addOpenedPath(pathArray) {
+            if(!this.isOpen(pathArray))
             {
-                this.openedPath.push(pathArray);
+                this.openedPaths.push(pathArray);
             }
-            this.$emit("open",  pathArray)
+        },
+        removeOpenedPath(pathArray) {
+            var openedPath = this.getOpenedPathFor(pathArray);
+            var index = this.openedPaths.indexOf(openedPath)
+            if(index >= 0)
+            {
+                this.openedPaths.splice(index, 1);
+            }
+        },
+        isOpen(pathArray) {
+            return !!this.getOpenedPathFor(pathArray);
+        },
+        onOpen (pathArray) {
+            this.addOpenedPath(pathArray);
+            this.$emit("open",  pathArray);
         },
         onClose (pathArray) {
-            var index = openedPath.indexOf(pathArray)
-            if(!index)
-            {
-                this.openedPath.splice(index, 1);
-            }
-            this.$emit("close",  pathArray)
+            this.removeOpenedPath(pathArray);
+            this.$emit("close",  pathArray);
         },
   },
   components: {
