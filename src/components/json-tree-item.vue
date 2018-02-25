@@ -32,7 +32,7 @@ export default {
             return typeof this.children !== "undefined";
         },
         path() {
-            return this.prefix == "" ? this.name : this.prefix + "/" + this.name; 
+            return this.prefix == "" ? this.name : this.prefix + "." + this.name; 
         }
     },
     data() {
@@ -44,8 +44,16 @@ export default {
         open() {
             this.isClosed = false;
         },
-        close() {
+        close(recursively) {
             this.isClosed = true;
+
+            if(recursively) {
+                this.$children.forEach(x => x.close(recursively));
+            }
+        },
+        hasPath(pathArray)
+        {
+            return pathArray.join(".") == this.path;
         }
     }
 };

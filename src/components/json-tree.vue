@@ -27,11 +27,16 @@ export default {
   },
 
   methods : {
-        before (pathArray) {
-            this.walkThroughChildren(this, pathArray, (x) => console.log(x._props.name))
+        open (pathArray) {
+            this.walkThroughChildren(this, pathArray, (x) => x.open())
         },
-        after (pathArray) {
-          this.walkThroughChildren(this, pathArray, null, (x) => console.log(x._props.name))
+        close (pathArray, recursively) {
+            var path = pathArray.slice();
+            this.walkThroughChildren(this, pathArray, null, (x) => {
+                if(x.hasPath(path)) {
+                    x.close(recursively);
+                }
+            });
         }
   },
 
