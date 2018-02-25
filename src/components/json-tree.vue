@@ -20,14 +20,13 @@ export default {
   mixins: [ChildrenMixin],
   data() {
     return {
-      items: this.json
+      items: this.json,
+      openedPath: []
     };
   },
-
   props :{
       json: {type:Array, required:false}
   },
-
   methods : {
         open (pathArray) {
             this.walkThroughChildren(this, pathArray, (x) => x.open())
@@ -40,14 +39,35 @@ export default {
                 }
             });
         },
-        onClose (pathArray) {
-            this.$emit("close",  pathArray)
+        getBiggestParentOpenedPath (pathArray) {
+            return this.openedPath
+                .filter(x => pathArray.includes(x))
+                .sort((a, b) => a.length - b.length)
+                [0];
+        },
+        getChildOpenedPath(pathArray) {
+            return this.openedPath
+                .filter(x => x.includes(pathArray));
+        },
+        updateOpenedPath(pathArray) {
+
         },
         onOpen (pathArray){
+            if(!this.openedPath.indexOf(pathArray))
+            {
+                this.openedPath.push(pathArray);
+            }
             this.$emit("open",  pathArray)
-        }
+        },
+        onClose (pathArray) {
+            var index = openedPath.indexOf(pathArray)
+            if(!index)
+            {
+                this.openedPath.splice(index, 1);
+            }
+            this.$emit("close",  pathArray)
+        },
   },
-
   components: {
       JsonTreeItem
   }
