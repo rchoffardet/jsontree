@@ -6,6 +6,8 @@
             :name="item.name"
             :children="item.children"
             :ref="item.name"
+            @close="onClose"
+            @open="onOpen"
         />
     </ul>
 </template>
@@ -37,6 +39,12 @@ export default {
                     x.close(recursively);
                 }
             });
+        },
+        onClose (pathArray) {
+            console.log("closed: " + pathArray.join("/"))
+        },
+        onOpen (pathArray){
+            console.log("opened: " + pathArray.join("/"))
         }
   },
 

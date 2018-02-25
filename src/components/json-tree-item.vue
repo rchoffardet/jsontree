@@ -12,6 +12,8 @@
                 :children="item.children"
                 :prefix="path"
                 :ref="item.name"
+                @close="onClose"
+                @open="onOpen"
             />
         </ul>
     </li>
@@ -43,17 +45,26 @@ export default {
     methods : {
         open() {
             this.isClosed = false;
+            this.$emit("open", [this.name]);
         },
         close(recursively) {
-            this.isClosed = true;
-
             if(recursively) {
                 this.$children.forEach(x => x.close(recursively));
             }
+
+            this.isClosed = true;
+            this.$emit("close", [this.name]);
         },
-        hasPath(pathArray)
-        {
+        hasPath(pathArray) {
             return pathArray.join(".") == this.path;
+        },
+        onOpen(pathArray) {
+            pathArray.unshift(this.name);
+            this.$emit("open", pathArray);
+        },
+        onClose(pathArray) {
+            pathArray.unshift(this.name);
+            this.$emit("close", pathArray);
         }
     }
 };
