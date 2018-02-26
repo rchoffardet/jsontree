@@ -1,7 +1,7 @@
 {
   "name": "jsontree",
   "version": "1.0.0",
-  "description": "A Vue.js project",
+  "description": "A simple json tree in vue.js",
   "author": "rchoffardet <robin.choffardet@gmail.com>",
   "private": true,
   "scripts": {
@@ -11,7 +11,6 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "lodash": "^4.17.5",
     "vue": "^2.5.2"
   },
   "devDependencies": {
