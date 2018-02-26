@@ -31,9 +31,8 @@ export default {
             this.walkThroughChildren(this, pathArray, (x) => x.open())
         },
         close (pathArray, recursively) {
-            var path = pathArray.slice();
             this.walkThroughChildren(this, pathArray, null, (x) => {
-                if(x.hasPath(path)) {
+                if(x.hasPath(pathArray)) {
                     x.close(recursively);
                 }
             });
@@ -52,5 +51,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

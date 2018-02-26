@@ -3,7 +3,11 @@
     <h2>Arbre simple</h2>
     <json-tree :json="json" />
     <h2>Arbre double</h2>
-    <json-tree-diff :left="json" :right="json" />
+    <json-tree-diff :left="json" :right="json" ref="tree"/>
+    <br />
+    <input type="text" v-model="path" />
+    <button @click="open">open</button>
+    <button @click="close">close</button>
   </div>
 </template>
 
@@ -20,6 +24,7 @@ export default {
 
     data() {
         return {
+            path : "",
             json : [{
                 name: "assets",
                 children: [{
@@ -57,6 +62,25 @@ export default {
                     ]
                 }]
             }]
+        }
+    },
+
+    computed : {
+        pathArray() {
+            return this.path.split("/");
+        }
+    },
+
+    methods : {
+        open () {
+            var tree = this.$refs.tree;
+            tree.trigger("open", tree.$refs.left, this.pathArray);
+            tree.trigger("open", tree.$refs.right, this.pathArray);
+        },
+        close () {
+            var tree = this.$refs.tree;
+            tree.trigger("close", tree.$refs.left, this.pathArray);
+            tree.trigger("close", tree.$refs.right, this.pathArray);
         }
     }
 }

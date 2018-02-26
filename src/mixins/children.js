@@ -3,7 +3,10 @@ var ChildrenMixin = {
         getChildOf(parent, ref) {
             return parent.$refs[ref];
         },
-        walkThroughChildren (parent, pathArray, beforeCallback, afterCallback) {
+        walkThroughChildren (parent, path, beforeCallback, afterCallback) {
+            // slice is just used to create a copy of path
+            // which is already an array
+            var pathArray = path.slice();
             if(pathArray.length == 0) {
                 return;
             }
