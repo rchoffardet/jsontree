@@ -37,5 +37,8 @@ export default {
 </script>
 
 <style scoped>
-
+ul {
+    display: inline-block;
+    width: 45%;
+}
 </style>

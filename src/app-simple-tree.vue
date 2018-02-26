@@ -1,26 +1,20 @@
 <template>
-  <div id="app">
-    <h2>Arbre simple</h2>
-    <json-tree :json="json" />
-    <h2>Arbre double</h2>
-    <json-tree-diff :left="json" :right="json" ref="tree"/>
-    <br />
-    <input type="text" v-model="path" />
-    <button @click="open">open</button>
-    <button @click="close">close</button>
-  </div>
+    <div>
+        <h2>Simple tree</h2>
+        <h3>(<a href="/">back</a>)</h3>
+        <br/>
+        <json-tree :json=json></json-tree>
+    </div>
 </template>
 
 <script>
-import JsonTree from './components/json-tree'
-import JsonTreeDiff from './components/json-tree-diff'
+import JsonTree from "./components/json-tree";
 
 export default {
-  name: 'App',
-  components: {
-    JsonTree,
-    JsonTreeDiff
-  },
+    name: "AppSimpleTree",
+    components: {
+        JsonTree
+    },
 
     data() {
         return {
@@ -62,7 +56,7 @@ export default {
                     ]
                 }]
             }]
-        }
+        };
     },
 
     computed : {
@@ -83,8 +77,6 @@ export default {
             tree.trigger("close", tree.$refs.right, this.pathArray);
         }
     }
-}
+};
 </script>
 
-<style>
-</style>
