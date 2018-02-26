@@ -4,7 +4,11 @@
         <h3>(<a href="/">back</a>)</h3>
         <br/>
 
-        <json-tree-diff :left="json" :right="json" />   
+        <input type="text" v-model="path"/>
+        <button @click="open">open</button>
+        <button @click="close">close</button>
+
+        <json-tree-diff :left="json" :right="json" ref="tree" />   
     </div>
 </template>
 
