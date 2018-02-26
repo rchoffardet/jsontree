@@ -2,6 +2,8 @@
   <div id="app">
     <h2>Arbre simple</h2>
     <json-tree :json="json" />
+    <h2>Arbre double</h2>
+    <json-tree-diff :left="json" :right="json" />
   </div>
 </template>
 
